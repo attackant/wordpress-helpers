@@ -15,7 +15,7 @@ License URI: LICENSE
  * @created   12/21/13 2:02 PM
  * @author    Damian Taggart
  * @copyright Copyright (c) 2013-2015
- * @link      https://mindsharelabs.com/
+ * @link      https://github.com/attackant/
  *
  * Copyright 2013-2016  Damian Taggart (https://github.com/attackant/)
  *

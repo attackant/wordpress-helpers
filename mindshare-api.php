@@ -306,7 +306,7 @@ if (!class_exists("Mindshare_API")) :
 					$links,
 					array(
 						sprintf(
-							'<a href="https://mindsharelabs.com/topics/mindshare-theme-api/" title="%1$s" target="_blank">%1$s</a>',
+							'<a href="https://github.com/attackant/topics/mindshare-theme-api/" title="%1$s" target="_blank">%1$s</a>',
 							esc_html__('Function Reference', 'mapi')
 						),
 						sprintf(

@@ -5,7 +5,7 @@
  * @created   9/30/16 2:08 PM
  * @author    Damian Taggart
  * @copyright Copyright (c) 2006-2023
- * @link      https://mindsharelabs.com/
+ * @link      https://github.com/attackant/
  */
 
 /**

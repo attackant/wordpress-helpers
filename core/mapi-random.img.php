@@ -4,7 +4,7 @@
  * use the wrapper function mapi_random_img in mapi-attachment.php instead
  * of calling this file directly.
  *
- * @link https://mindsharelabs.com/documentation/mapi_random_img/
+ * @link https://github.com/attackant/documentation/mapi_random_img/
  *
  * @todo add in additional headers? ... header('Content-Type: image/gif');
  *
