@@ -6,9 +6,9 @@
  *
  * @link      /wp-content/plugins/mindshare-api-master/tests/mapi-social-tests.php
  * @created   8/22/13 2:21 PM
- * @author    Mindshare Labs, Inc.
- * @copyright Copyright (c) 2006-2016
- * @link      https://mindsharelabs.com/downloads/mindshare-theme-api/
+ * @author    Damian Taggart
+ * @copyright Copyright (c) 2006-2023
+ * @link      https://github.com/attackant/wordpress-helpers
  */
 
 include_once('../../../../wp-blog-header.php');

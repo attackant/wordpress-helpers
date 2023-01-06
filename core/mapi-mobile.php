@@ -3,9 +3,9 @@
  * WordPress Helpers MOBILE DEVICE FUNCTIONS
  *
  *
- * @author     Mindshare Labs, Inc.
- * @copyright  Copyright (c) 2006-2016
- * @link       https://mindsharelabs.com/downloads/mindshare-theme-api/
+ * @author     Damian Taggart
+ * @copyright  Copyright (c) 2006-2023
+ * @link       https://github.com/attackant/wordpress-helpers
  * @filename   mapi-mobile.php
  *
  */

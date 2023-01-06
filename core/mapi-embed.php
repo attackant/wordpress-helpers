@@ -3,8 +3,8 @@
  * mapi-embed.php
  *
  * @created   9/30/16 2:08 PM
- * @author    Mindshare Labs, Inc.
- * @copyright Copyright (c) 2006-2016
+ * @author    Damian Taggart
+ * @copyright Copyright (c) 2006-2023
  * @link      https://mindsharelabs.com/
  */
 

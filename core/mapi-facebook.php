@@ -3,8 +3,8 @@
  * mapi-facebook.php
  *
  * @created   10/5/16 11:16 AM
- * @author    Mindshare Labs, Inc.
- * @copyright Copyright (c) 2006-2016
+ * @author    Damian Taggart
+ * @copyright Copyright (c) 2006-2023
  * @link      https://mindsharelabs.com/
  */
 

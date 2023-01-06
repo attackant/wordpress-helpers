@@ -3,8 +3,8 @@
  * mapi-user.php
  *
  * @created   3/6/14 12:43 PM
- * @author    Mindshare Labs, Inc.
- * @copyright Copyright (c) 2006-2016
+ * @author    Damian Taggart
+ * @copyright Copyright (c) 2006-2023
  * @link      http://www.mindsharelabs.com/documentation/
  *
  */

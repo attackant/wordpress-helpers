@@ -6,8 +6,8 @@
  * mapi-admin.php
  *
  * @created   4/28/14 10:46 AM
- * @author    Mindshare Labs, Inc.
- * @copyright Copyright (c) 2006-2016
+ * @author    Damian Taggart
+ * @copyright Copyright (c) 2006-2023
  * @link      http://www.mindsharelabs.com/documentation/
  *
  */

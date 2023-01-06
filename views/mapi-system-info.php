@@ -4,9 +4,9 @@
  * Forked from: SysInfo by Dave Donaldson http://wordpress.org/extend/plugins/sysinfo/
  *
  * @created   4/11/13 5:58 PM
- * @author    Mindshare Labs, Inc.
- * @copyright Copyright (c) 2006-2016
- * @link      https://mindsharelabs.com/downloads/mindshare-theme-api/
+ * @author    Damian Taggart
+ * @copyright Copyright (c) 2006-2023
+ * @link      https://github.com/attackant/wordpress-helpers
  */
 
 require_once(MAPI_DIR_PATH . 'core/mapi-utility.php');

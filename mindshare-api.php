@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: WordPress Helpers
-Plugin URI: https://mindsharelabs.com/downloads/mindshare-theme-api/
+Plugin URI: https://github.com/attackant/wordpress-helpers
 Description: Provides a library of additional template tags, 3rd-party libraries, and functions for WordPress themes and additional features for WordPress CMS websites.
-Author: Mindshare Labs, Inc
+Author: Damian Taggart
 Version: 1.1.2
-Author URI: https://mind.sh/are/
+Author URI: https://github.com/attackant/
 Network: false
 */
 
@@ -81,9 +81,9 @@ if (!class_exists('Mindshare_API_Plugin_Updater')) {
  * Mindshare_API class
  * wrapper class for the API
  *
- * @author    Mindshare Labs, Inc.
- * @copyright Copyright (c) 2006-2016
- * @link      https://mindsharelabs.com/downloads/mindshare-theme-api/
+ * @author    Damian Taggart
+ * @copyright Copyright (c) 2006-2023
+ * @link      https://github.com/attackant/wordpress-helpers
  */
 if (!class_exists("Mindshare_API")) :
 	class Mindshare_API {
@@ -270,7 +270,7 @@ if (!class_exists("Mindshare_API")) :
 					'version'   => $this->class_version, // current version number
 					'license'   => $this->license_key,
 					'item_name' => MAPI_PLUGIN_NAME, // name of this plugin
-					'author'    => 'Mindshare Labs, Inc.',
+					'author'    => 'Damian Taggart',
 				)
 			);
 		}

@@ -1,10 +1,10 @@
 WordPress Helpers
 =============
 
-- Author: Mindshare Labs, Inc.
+- Author: Damian Taggart
 - License: GPL v3
 - Copyright: 2006-2017
-- Link: https://mindsharelabs.com/downloads/mindshare-theme-api/
+- Link: https://github.com/attackant/wordpress-helpers
 
 Provides a library of additional template tags, 3rd-party libraries, and functions for WordPress themes and additional features for WordPress CMS websites.
 

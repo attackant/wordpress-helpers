@@ -2,9 +2,9 @@
 /**
  * WordPress Helpers HTML COMPRESSION, formerly "mCMS Compression"
  *
- * @author     Mindshare Labs, Inc.
- * @copyright  Copyright (c) 2006-2016
- * @link       https://mindsharelabs.com/downloads/mindshare-theme-api/
+ * @author     Damian Taggart
+ * @copyright  Copyright (c) 2006-2023
+ * @link       https://github.com/attackant/wordpress-helpers
  * @filename   mcms-compresion.php
  *             Changelog:
  *             - rewrote based on http://www.svachon.com/wp-html-compression/

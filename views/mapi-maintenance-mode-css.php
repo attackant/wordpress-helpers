@@ -3,9 +3,9 @@
 * mapi_maintenance-mode-css.php
 *
 * @created 8/22/13 11:33 AM
-* @author Mindshare Labs, Inc.
-* @copyright Copyright (c) 2006-2016
-* @link https://mindsharelabs.com/downloads/mindshare-theme-api/
+* @author Damian Taggart
+* @copyright Copyright (c) 2006-2023
+* @link https://github.com/attackant/wordpress-helpers
 *
 */
 
