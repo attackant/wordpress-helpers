@@ -428,7 +428,7 @@ $mapi_options->Title($lib_options_label);
 
 $mapi_options->addParagraph(
 	'Quickly and easily add the most common (and cool!) JavaScript and jQuery libraries and utilities.
-	The Mindshare Theme API is updated regularly with the latest versions so you don\'t need to worry
+	The WordPress Helpers is updated regularly with the latest versions so you don\'t need to worry
 	about bundling old third-party code into your custom themes. Just turn a feature on and it will be
 	automatically inlcuded in your theme.'
 );

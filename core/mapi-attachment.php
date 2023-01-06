@@ -1,6 +1,6 @@
 <?php
 /**
- * Mindshare Theme API ATTACHMENT & IMAGE FUNCTIONS
+ * WordPress Helpers ATTACHMENT & IMAGE FUNCTIONS
  *
  *
  * @author     Mindshare Labs, Inc.

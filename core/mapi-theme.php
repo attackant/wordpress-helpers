@@ -10,7 +10,7 @@
  */
 
 /**
- * Optionally displays a credit message in compatible themes when enabled in the Mindshare Theme API
+ * Optionally displays a credit message in compatible themes when enabled in the WordPress Helpers
  * (Settings > Developer Settings > Misc. Settings > Show Credit)
  *
  */

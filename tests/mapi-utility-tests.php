@@ -1,6 +1,6 @@
 <?php
 /*
- * Template Name: Mindshare Theme API Tests
+ * Template Name: WordPress Helpers Tests
  *
  * This file contains tests and is not used in production. Updated for 2014.
  * @link /wp-content/plugins/mindshare-api-master/tests/mapi-utility-tests.php

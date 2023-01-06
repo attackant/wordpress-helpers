@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * Mindshare Theme API WordPress Admin area functions
+ * WordPress Helpers WordPress Admin area functions
  *
  * mapi-admin.php
  *

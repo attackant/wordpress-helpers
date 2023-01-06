@@ -1,6 +1,6 @@
 <?php
 /**
- * Mindshare Theme API MOBILE DEVICE FUNCTIONS
+ * WordPress Helpers MOBILE DEVICE FUNCTIONS
  *
  *
  * @author     Mindshare Labs, Inc.

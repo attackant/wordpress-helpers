@@ -1,6 +1,6 @@
 <?php
 /**
- * Mindshare Theme API HTML COMPRESSION, formerly "mCMS Compression"
+ * WordPress Helpers HTML COMPRESSION, formerly "mCMS Compression"
  *
  * @author     Mindshare Labs, Inc.
  * @copyright  Copyright (c) 2006-2016

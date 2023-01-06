@@ -1,6 +1,6 @@
 <?php
 /**
- * Mindshare Theme API UTILITY FUNCTIONS
+ * WordPress Helpers UTILITY FUNCTIONS
  *
  * @author     Mindshare Labs, Inc.
  * @copyright  Copyright (c) 2006-2016
@@ -605,7 +605,7 @@ function mapi_get_option($name = NULL) {
 }
 
 /**
- * Sets a Mindshare Theme API option in the database.
+ * Sets a WordPress Helpers option in the database.
  *
  * @param $name
  * @param $value
@@ -629,7 +629,7 @@ function mapi_update_option($name, $value) {
 }
 
 /**
- * Add or sets a Mindshare Theme API option in the database.
+ * Add or sets a WordPress Helpers option in the database.
  *
  * @param $name
  * @param $value

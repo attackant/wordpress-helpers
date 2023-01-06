@@ -1,6 +1,6 @@
 <?php
 /**
- * Mindshare Theme API CATEGORY FUNCTIONS
+ * WordPress Helpers CATEGORY FUNCTIONS
  *
  *
  *

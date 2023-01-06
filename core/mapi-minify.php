@@ -1,6 +1,6 @@
 <?php
 /**
- * Mindshare Theme API JS / CSS MINIFICATION
+ * WordPress Helpers JS / CSS MINIFICATION
  *
  *
  * @author     Mindshare Labs, Inc.

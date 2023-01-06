@@ -1,6 +1,6 @@
 <?php
 /**
- * Mindshare Theme API SECURITY & WORDPRESS USER FUNCTIONS
+ * WordPress Helpers SECURITY & WORDPRESS USER FUNCTIONS
  *
  * @author     Mindshare Labs, Inc.
  * @copyright  Copyright (c) 2006-2016

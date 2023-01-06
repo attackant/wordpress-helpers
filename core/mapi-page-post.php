@@ -1,6 +1,6 @@
 <?php
 /**
- * Mindshare Theme API PAGE & POST FUNCTIONS
+ * WordPress Helpers PAGE & POST FUNCTIONS
  *
  * @author     Mindshare Labs, Inc.
  * @copyright  Copyright (c) 2006-2016

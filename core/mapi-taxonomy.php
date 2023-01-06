@@ -1,6 +1,6 @@
 <?php
 /**
- * Mindshare Theme API TAXONOMY & TERM FUNCTIONS
+ * WordPress Helpers TAXONOMY & TERM FUNCTIONS
  *
  *
  * @author     Mindshare Labs, Inc.

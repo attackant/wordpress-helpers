@@ -1,6 +1,6 @@
 <?php
 /**
- * Mindshare Theme API MISC SOCIAL FUNCTIONS
+ * WordPress Helpers MISC SOCIAL FUNCTIONS
  *
  * @author     Mindshare Labs, Inc.
  * @copyright  Copyright (c) 2006-2016

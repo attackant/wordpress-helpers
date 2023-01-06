@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Mindshare Theme API
+Plugin Name: WordPress Helpers
 Plugin URI: https://mindsharelabs.com/downloads/mindshare-theme-api/
 Description: Provides a library of additional template tags, 3rd-party libraries, and functions for WordPress themes and additional features for WordPress CMS websites.
 Author: Mindshare Labs, Inc
@@ -20,7 +20,7 @@ if (!defined('MAPI_MIN_WP_VERSION')) {
 }
 
 if (!defined('MAPI_PLUGIN_NAME')) {
-	define('MAPI_PLUGIN_NAME', 'Mindshare Theme API');
+	define('MAPI_PLUGIN_NAME', 'WordPress Helpers');
 }
 
 if (!defined('MAPI_UPDATE_URL')) {
@@ -193,9 +193,9 @@ if (!class_exists("Mindshare_API")) :
 					'installing'                      => __('Installing Plugin: %s', 'mapi'),
 					// %1$s = plugin name
 					'oops'                            => __('Something went wrong with the plugin API.', 'mapi'),
-					'notice_can_install_required'     => _n_noop('The Mindshare Theme API requires the following plugin: %1$s.', 'The Mindshare Theme API requires the following plugins: %1$s.'),
+					'notice_can_install_required'     => _n_noop('The WordPress Helpers requires the following plugin: %1$s.', 'The WordPress Helpers requires the following plugins: %1$s.'),
 					// %1$s = plugin name(s)
-					'notice_can_install_recommended'  => _n_noop('To take full advantage of the Mindshare Theme API please install the following plugin: %1$s.', 'To take full advantage of the Mindshare Theme API please install the following plugins: %1$s.'),
+					'notice_can_install_recommended'  => _n_noop('To take full advantage of the WordPress Helpers please install the following plugin: %1$s.', 'To take full advantage of the WordPress Helpers please install the following plugins: %1$s.'),
 					// %1$s = plugin name(s)
 					'notice_cannot_install'           => _n_noop('Sorry, but you do not have the correct permissions to install the %s plugin. Contact the administrator of this site for help on getting the plugin installed.', 'Sorry, but you do not have the correct permissions to install the %s plugins. Contact the administrator of this site for help on getting the plugins installed.'),
 					// %1$s = plugin name(s)

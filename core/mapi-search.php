@@ -1,6 +1,6 @@
 <?php
 /**
- * Mindshare Theme API SEARCH FUNCTIONS
+ * WordPress Helpers SEARCH FUNCTIONS
  *
  *
  * @author     Mindshare Labs, Inc.

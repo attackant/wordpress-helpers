@@ -1,1 +1,1 @@
-This folder contains code used in testing the Mindshare Theme API.
+This folder contains code used in testing the WordPress Helpers.

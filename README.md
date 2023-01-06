@@ -1,4 +1,4 @@
-Mindshare Theme API
+WordPress Helpers
 =============
 
 - Author: Mindshare Labs, Inc.

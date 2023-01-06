@@ -1,6 +1,6 @@
 <?php
 /**
- * Mindshare Theme API WORDPRESS SHORTCODES
+ * WordPress Helpers WORDPRESS SHORTCODES
  *
  *
  * @author     Mindshare Labs, Inc.
