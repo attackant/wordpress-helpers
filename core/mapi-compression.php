@@ -29,31 +29,31 @@ class mapi_compression {
 	/**
 	 * @var bool Should CSS be compressed?
 	 */
-	protected $compress_css = TRUE;
+	protected $compress_css = true;
 
 	/**
 	 * @var bool should JS also be compressed? Disabled due to prevalent syntax errors.
 	 */
-	protected $compress_js = FALSE;
+	protected $compress_js = false;
 
 	/**
 	 * @var bool Should the informational HTML comment be appended to the doc? Disabled because it's annoying.
 	 */
-	protected $info_comment = FALSE;
+	protected $info_comment = false;
 
 	/**
 	 * @var bool Should comments be stripped?
 	 */
-	protected $remove_comments = TRUE;
+	protected $remove_comments = true;
 
 	protected $html;
 
-	public function __construct($html) {
-		$this->compress_js = apply_filters('mapi_compress_js', FALSE);
-		$this->info_comment = apply_filters('mapi_compress_info', FALSE);
+	public function __construct( $html ) {
+		$this->compress_js  = apply_filters( 'mapi_compress_js', false );
+		$this->info_comment = apply_filters( 'mapi_compress_info', false );
 
-		if(!empty($html)) {
-			$this->parse_html($html);
+		if ( ! empty( $html ) ) {
+			$this->parse_html( $html );
 		}
 	}
 
@@ -69,11 +69,11 @@ class mapi_compression {
 	 *
 	 * @return string
 	 */
-	protected function btm_comment($raw, $compressed) {
-		$raw = strlen($raw);
-		$compressed = strlen($compressed);
-		$savings = ($raw - $compressed) / $raw * 100;
-		$savings = round($savings, 2);
+	protected function btm_comment( $raw, $compressed ) {
+		$raw        = strlen( $raw );
+		$compressed = strlen( $compressed );
+		$savings    = ( $raw - $compressed ) / $raw * 100;
+		$savings    = round( $savings, 2 );
 
 		return '<!-- ' . MAPI_PLUGIN_NAME . ' crunched this document by ' . $savings . '%. The file was ' . $raw . ' bytes, but is now ' . $compressed . ' bytes -->';
 	}
@@ -85,59 +85,59 @@ class mapi_compression {
 	 *
 	 * @return string
 	 */
-	protected function minify_html($html) {
+	protected function minify_html( $html ) {
 		$pattern = '/<(?<script>script).*?<\/script\s*>|<(?<style>style).*?<\/style\s*>|<!(?<comment>--).*?-->|<(?<tag>[\/\w.:-]*)(?:".*?"|\'.*?\'|[^\'">]+)*>|(?<text>((<[^!\/\w.:-])?[^<]*)+)|/si';
-		preg_match_all($pattern, $html, $matches, PREG_SET_ORDER);
-		$overriding = FALSE;
-		$raw_tag = FALSE;
+		preg_match_all( $pattern, $html, $matches, PREG_SET_ORDER );
+		$overriding = false;
+		$raw_tag    = false;
 		// Variable reused for output
 		$html = '';
-		foreach ($matches as $token) {
-			$tag = (isset($token['tag'])) ? strtolower($token['tag']) : NULL;
+		foreach ( $matches as $token ) {
+			$tag     = ( isset( $token['tag'] ) ) ? strtolower( $token['tag'] ) : null;
 			$content = $token[0];
-			if(is_null($tag)) {
-				if(!empty($token['script'])) {
+			if ( is_null( $tag ) ) {
+				if ( ! empty( $token['script'] ) ) {
 					$strip = $this->compress_js;
 				} else {
-					if(!empty($token['style'])) {
+					if ( ! empty( $token['style'] ) ) {
 						$strip = $this->compress_css;
 					} else {
-						if($content == mapi_toggle_html_compression(FALSE)) {
-							$overriding = !$overriding;
+						if ( $content == mapi_toggle_html_compression( false ) ) {
+							$overriding = ! $overriding;
 							// Don't print the comment
 							continue;
 						} else {
-							if(apply_filters('mapi_compress_strip_html_comments', $this->remove_comments)) {
-								if(!$overriding && $raw_tag != 'textarea') {
+							if ( apply_filters( 'mapi_compress_strip_html_comments', $this->remove_comments ) ) {
+								if ( ! $overriding && $raw_tag != 'textarea' ) {
 									// Remove any HTML comments, except MSIE conditional comments
-									$content = preg_replace('/<!--(?!\s*(?:\[if [^\]]+]|<!|>))(?:(?!-->).)*-->/s', '', $content);
+									$content = preg_replace( '/<!--(?!\s*(?:\[if [^\]]+]|<!|>))(?:(?!-->).)*-->/s', '', $content );
 								}
 							}
 						}
 					}
 				}
 			} else {
-				if($tag == 'pre' || $tag == 'textarea') {
+				if ( $tag == 'pre' || $tag == 'textarea' ) {
 					$raw_tag = $tag;
 				} else {
-					if($tag == '/pre' || $tag == '/textarea') {
-						$raw_tag = FALSE;
+					if ( $tag == '/pre' || $tag == '/textarea' ) {
+						$raw_tag = false;
 					} else {
-						if($raw_tag || $overriding) {
-							$strip = FALSE;
+						if ( $raw_tag || $overriding ) {
+							$strip = false;
 						} else {
-							$strip = TRUE;
+							$strip = true;
 							// Remove any empty attributes, except: action, alt, content, src
 							//$content = preg_replace('/(\s+)(\w++(?<!\baction|\balt|\bcontent|\bsrc)="")/', '$1', $content);
 							// Remove any space before the end of self-closing XHTML tags
 							// JavaScript excluded
-							$content = str_replace(' />', '/>', $content);
+							$content = str_replace( ' />', '/>', $content );
 						}
 					}
 				}
 			}
-			if($strip) {
-				$content = $this->strip_whitespace($content);
+			if ( $strip ) {
+				$content = $this->strip_whitespace( $content );
 			}
 			$html .= $content;
 		}
@@ -150,11 +150,11 @@ class mapi_compression {
 	 *
 	 * @param $html
 	 */
-	public function parse_html($html) {
-		$this->html = $this->minify_html($html);
-		$comment_override = apply_filters('mapi_compress_comment', FALSE);
-		if($this->info_comment || $comment_override) {
-			$this->html .= "\n" . $this->btm_comment($html, $this->html);
+	public function parse_html( $html ) {
+		$this->html       = $this->minify_html( $html );
+		$comment_override = apply_filters( 'mapi_compress_comment', false );
+		if ( $this->info_comment || $comment_override ) {
+			$this->html .= "\n" . $this->btm_comment( $html, $this->html );
 		}
 	}
 
@@ -165,12 +165,12 @@ class mapi_compression {
 	 *
 	 * @return mixed
 	 */
-	protected function strip_whitespace($str) {
-		$str = str_replace("\t", ' ', $str);
-		$str = str_replace("\n", '', $str);
-		$str = str_replace("\r", '', $str);
-		while(stristr($str, '  ')) {
-			$str = str_replace('  ', ' ', $str);
+	protected function strip_whitespace( $str ) {
+		$str = str_replace( "\t", ' ', $str );
+		$str = str_replace( "\n", '', $str );
+		$str = str_replace( "\r", '', $str );
+		while ( stristr( $str, '  ' ) ) {
+			$str = str_replace( '  ', ' ', $str );
 		}
 
 		return $str;
@@ -186,22 +186,22 @@ class mapi_compression {
  *
  * @return mapi_compression
  */
-function mapi_compress_finish($html) {
-	return apply_filters('mapi_html_compression', new mapi_compression($html));
+function mapi_compress_finish( $html ) {
+	return apply_filters( 'mapi_html_compression', new mapi_compression( $html ) );
 }
 
 /**
  * Starts the output buffer
  */
 function mapi_compress_start() {
-	ob_start('mapi_compress_finish');
+	ob_start( 'mapi_compress_finish' );
 }
 
 /**
  * Outputs an HTML comment to turn off HTML/CSS/JS compression.
  */
 function mapi_stop_compression() {
-	mapi_toggle_html_compression(TRUE);
+	mapi_toggle_html_compression( true );
 }
 
 /**
@@ -209,7 +209,7 @@ function mapi_stop_compression() {
  * it was turned off using mapi_stop_compression().
  */
 function mapi_start_compression() {
-	mapi_toggle_html_compression(TRUE);
+	mapi_toggle_html_compression( true );
 }
 
 /**
@@ -222,9 +222,9 @@ function mapi_start_compression() {
  *
  * @return string
  */
-function mapi_toggle_html_compression($echo = TRUE) {
+function mapi_toggle_html_compression( $echo = true ) {
 	$comment = '<!--compression-none-->';
-	if($echo) {
+	if ( $echo ) {
 		echo $comment;
 	} else {
 		return $comment;

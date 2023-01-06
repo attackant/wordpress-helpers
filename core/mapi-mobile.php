@@ -16,12 +16,12 @@
  * added word 'device' to the function name for clarity.
  *
  * @param bool $include_iphone Optional. Whether to include iPhones as mobile devices. Default is TRUE.
- * @param bool $include_ipad   Optional. Whether to include iPads as mobile devices. Default is FALSE.
+ * @param bool $include_ipad Optional. Whether to include iPads as mobile devices. Default is FALSE.
  *
  * @return bool
  */
-function mapi_is_mobile_device($include_iphone = TRUE, $include_ipad = FALSE) {
-	return mapi_is_mobile($include_iphone, $include_ipad);
+function mapi_is_mobile_device( $include_iphone = true, $include_ipad = false ) {
+	return mapi_is_mobile( $include_iphone, $include_ipad );
 }
 
 /**
@@ -29,31 +29,31 @@ function mapi_is_mobile_device($include_iphone = TRUE, $include_ipad = FALSE) {
  * Tests to see if the current site visitor is using a mobile device based on user agent.
  *
  * @param bool $include_iphone Optional. Whether to include iPhones as mobile devices. Default is TRUE.
- * @param bool $include_ipad   Optional. Whether to include iPads as mobile devices. Default is FALSE.
+ * @param bool $include_ipad Optional. Whether to include iPads as mobile devices. Default is FALSE.
  *
  * @return bool Returns TRUE if the user is visiting the site from a mobile device, otherwise FALSE.
  */
-function mapi_is_mobile($include_iphone = TRUE, $include_ipad = FALSE) {
+function mapi_is_mobile( $include_iphone = true, $include_ipad = false ) {
 
-	if(!$include_iphone && preg_match("/iphone/i", $_SERVER["HTTP_USER_AGENT"])) {
-		return FALSE;
+	if ( ! $include_iphone && preg_match( "/iphone/i", $_SERVER["HTTP_USER_AGENT"] ) ) {
+		return false;
 	}
 
-	if(!$include_ipad && preg_match("/ipad/i", $_SERVER["HTTP_USER_AGENT"])) {
-		return FALSE;
+	if ( ! $include_ipad && preg_match( "/ipad/i", $_SERVER["HTTP_USER_AGENT"] ) ) {
+		return false;
 	}
 
 	// check the server headers to see if they're mobile friendly
-	if(isset($_SERVER["HTTP_X_WAP_PROFILE"])) {
-		return TRUE;
+	if ( isset( $_SERVER["HTTP_X_WAP_PROFILE"] ) ) {
+		return true;
 	}
 
 	// if the http_accept header supports wap then it's a mobile too
-	if(preg_match("/wap\.|\.wap/i", $_SERVER["HTTP_ACCEPT"])) {
-		return TRUE;
+	if ( preg_match( "/wap\.|\.wap/i", $_SERVER["HTTP_ACCEPT"] ) ) {
+		return true;
 	}
 
-	if(isset($_SERVER["HTTP_USER_AGENT"])) {
+	if ( isset( $_SERVER["HTTP_USER_AGENT"] ) ) {
 		$user_agents = array(
 			"midp",
 			"j2me",
@@ -121,14 +121,14 @@ function mapi_is_mobile($include_iphone = TRUE, $include_ipad = FALSE) {
 			"\d\d\di",
 			"moto"
 		);
-		foreach($user_agents as $user_string) {
-			if(preg_match("/".$user_string."/i", $_SERVER["HTTP_USER_AGENT"])) {
-				return TRUE;
+		foreach ( $user_agents as $user_string ) {
+			if ( preg_match( "/" . $user_string . "/i", $_SERVER["HTTP_USER_AGENT"] ) ) {
+				return true;
 			}
 		}
 	}
 
-	return FALSE;
+	return false;
 }
 
 /**
@@ -146,34 +146,34 @@ function mapi_is_mobile($include_iphone = TRUE, $include_ipad = FALSE) {
  * Allows users/developers to override any previously set choice by appending ?mobile=on or ?mobile=off to the
  * current URL. Useful for debugging.
  *
- * @param string $action             Optional. Mechanism of action. Valid values are "class" (add a "mobile" CSS class to the BODY
+ * @param string $action Optional. Mechanism of action. Valid values are "class" (add a "mobile" CSS class to the BODY
  *                                   tag) or "require" (require a PHP file from the theme directory.). Defaults to "class".
- * @param bool   $include_iphone     Optional. Whether to include iPhones as mobile devices. Default is TRUE.
- * @param bool   $include_ipad       Optional. Whether to include iPads as mobile devices. Default is FALSE.
+ * @param bool $include_iphone Optional. Whether to include iPhones as mobile devices. Default is TRUE.
+ * @param bool $include_ipad Optional. Whether to include iPads as mobile devices. Default is FALSE.
  * @param string $template_file_slug Optional. Basename of the PHP file to include from the theme folder. Default is
  *                                   "mobile" (the .php suffix is added by the function.)
  *
  * @return string
  */
-function mapi_mobile_header($action = 'class', $include_iphone = TRUE, $include_ipad = FALSE, $template_file_slug = 'mobile') {
-	if(headers_sent()) {
+function mapi_mobile_header( $action = 'class', $include_iphone = true, $include_ipad = false, $template_file_slug = 'mobile' ) {
+	if ( headers_sent() ) {
 		return mapi_error(
 			array(
-				 'msg'  => 'Headers already sent, mobile headers could not be sent.',
-				 'echo' => FALSE,
-				 'die'  => FALSE
+				'msg'  => 'Headers already sent, mobile headers could not be sent.',
+				'echo' => false,
+				'die'  => false
 			)
 		);
 	}
-	$mobile_cookie = apply_filters('mapi_mobile_cookie', "mobile");
-	if(mapi_is_true($_GET['mobile']) || mapi_is_mobile($include_iphone, $include_ipad)) {
-		setcookie($mobile_cookie, 'on', time() + 60 * 60 * 24 * 365, '/', '.'.parse_url(get_bloginfo('url'), PHP_URL_HOST));
+	$mobile_cookie = apply_filters( 'mapi_mobile_cookie', "mobile" );
+	if ( mapi_is_true( $_GET['mobile'] ) || mapi_is_mobile( $include_iphone, $include_ipad ) ) {
+		setcookie( $mobile_cookie, 'on', time() + 60 * 60 * 24 * 365, '/', '.' . parse_url( get_bloginfo( 'url' ), PHP_URL_HOST ) );
 	}
-	if(!mapi_is_true($_GET['mobile'])) {
-		setcookie($mobile_cookie, 'off', time() + 60 * 60 * 24 * 365, '/', '.'.parse_url(get_bloginfo('url'), PHP_URL_HOST));
+	if ( ! mapi_is_true( $_GET['mobile'] ) ) {
+		setcookie( $mobile_cookie, 'off', time() + 60 * 60 * 24 * 365, '/', '.' . parse_url( get_bloginfo( 'url' ), PHP_URL_HOST ) );
 	}
-	if(mapi_is_mobile_active()) {
-		$action == 'require' ? require(get_template_directory().'/'.$template_file_slug.'.php') : add_filter('body_class', 'mapi_add_body_mobile_class');
+	if ( mapi_is_mobile_active() ) {
+		$action == 'require' ? require( get_template_directory() . '/' . $template_file_slug . '.php' ) : add_filter( 'body_class', 'mapi_add_body_mobile_class' );
 	}
 }
 
@@ -186,8 +186,9 @@ function mapi_mobile_header($action = 'class', $include_iphone = TRUE, $include_
  *
  * @return array
  */
-function mapi_add_body_mobile_class($classes) {
-	$classes[] = apply_filters('mapi_mobile_class', 'mobile');
+function mapi_add_body_mobile_class( $classes ) {
+	$classes[] = apply_filters( 'mapi_mobile_class', 'mobile' );
+
 	return $classes;
 }
 
@@ -205,35 +206,36 @@ function mapi_add_body_mobile_class($classes) {
  */
 function mapi_is_mobile_active() {
 	// 1. if the cookie is set to ON and the get var is not 'off', go mobile
-	if(mapi_is_true($_COOKIE[apply_filters('mapi_mobile_cookie', "mobile")]) && $_GET['mobile'] != 'off') {
-		return TRUE;
+	if ( mapi_is_true( $_COOKIE[ apply_filters( 'mapi_mobile_cookie', "mobile" ) ] ) && $_GET['mobile'] != 'off' ) {
+		return true;
 	}
 	// 2. if we automatcially detect a mobile device, and the get var and cookie are both 'off', go mobile
-	if(mapi_is_mobile() && $_GET['mobile'] != 'off' && $_COOKIE[apply_filters('mapi_mobile_cookie', "mobile")] != 'off') {
-		return TRUE;
+	if ( mapi_is_mobile() && $_GET['mobile'] != 'off' && $_COOKIE[ apply_filters( 'mapi_mobile_cookie', "mobile" ) ] != 'off' ) {
+		return true;
 	}
 	// 3. if just get var is set to 'on', go mobile
-	if(mapi_is_true($_GET['mobile'])) {
-		return TRUE;
+	if ( mapi_is_true( $_GET['mobile'] ) ) {
+		return true;
 	}
-	return FALSE;
+
+	return false;
 }
 
 /**
  *
  * Outputs an HTML hyperlink so users can toggle between the mobile and non-mobile version of a site.
  *
- * @param string $before            Text or HTML to output before the link.
- * @param string $after             Text or HTML to output after the link.
- * @param string $link_text_full    Link text for accessing the non-mobile site.
- * @param string $link_text_mobile  Link text for accessing the mobile site.
- * @param string $title_text_full   Link title attribute for accessing the non-mobile site.
+ * @param string $before Text or HTML to output before the link.
+ * @param string $after Text or HTML to output after the link.
+ * @param string $link_text_full Link text for accessing the non-mobile site.
+ * @param string $link_text_mobile Link text for accessing the mobile site.
+ * @param string $title_text_full Link title attribute for accessing the non-mobile site.
  * @param string $title_text_mobile Link title attribute for accessing the mobile site.
  */
-function mapi_mobile_link($before = '<li class="mcms-mobile-link">', $after = '</li>', $link_text_full = 'Full Website', $link_text_mobile = 'Mobile Website', $title_text_full = 'Switch to our full website', $title_text_mobile = 'Switch to our mobile website') {
-	if(mapi_is_mobile_active()) {
-		echo apply_filters('mapi_mobile_link_off', $before.'<a href="?mobile=off" title="'.$link_text_full.'">'.$link_text_full.'</a>'.$after);
+function mapi_mobile_link( $before = '<li class="mcms-mobile-link">', $after = '</li>', $link_text_full = 'Full Website', $link_text_mobile = 'Mobile Website', $title_text_full = 'Switch to our full website', $title_text_mobile = 'Switch to our mobile website' ) {
+	if ( mapi_is_mobile_active() ) {
+		echo apply_filters( 'mapi_mobile_link_off', $before . '<a href="?mobile=off" title="' . $link_text_full . '">' . $link_text_full . '</a>' . $after );
 	} else {
-		echo apply_filters('mapi_mobile_link_on', $before.'<a href="?mobile=on" title="'.$link_text_mobile.'">'.$link_text_mobile.'</a>'.$after);
+		echo apply_filters( 'mapi_mobile_link_on', $before . '<a href="?mobile=on" title="' . $link_text_mobile . '">' . $link_text_mobile . '</a>' . $after );
 	}
 }

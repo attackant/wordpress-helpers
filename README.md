@@ -1,14 +1,16 @@
-WordPress Helpers
+ordPress Helpers
 =============
 
 - Author: Damian Taggart
 - License: GPL v3
-- Copyright: 2006-2017
+- Copyright: 2006-2023
 - Link: https://github.com/attackant/wordpress-helpers
 
 Provides a library of additional template tags, 3rd-party libraries, and functions for WordPress themes and additional features for WordPress CMS websites.
 
 # Changelog:
+## 2.0 
+- removed a ton of libraries and code so that only some possibly useful functions remain for 2023
 
 ## 1.1.2
 - Updated `Mindshare_API_Plugin_Updater` class to current version of EDD Plugin Updater

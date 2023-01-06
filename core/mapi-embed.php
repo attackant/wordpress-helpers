@@ -19,7 +19,7 @@
  *
  * @return string
  */
-function mapi_embed_html($html) {
+function mapi_embed_html( $html ) {
 	return '<div class="mapi-video-container">' . $html . '</div>';
 }
 

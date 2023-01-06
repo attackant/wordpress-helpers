@@ -17,67 +17,68 @@
  * You can also bypass maintenance mode from within wp-config.php like so:
  * <code>define('MAPI_MAINTENANCE_MODE_BYPASS', TRUE);</code>
  *
- * @param bool   $enabled
+ * @param bool $enabled
  * @param string $role
  * @param string $reason
  * @param string $css
- * @param bool   $use_503
+ * @param bool $use_503
  */
-function mapi_maintenance_mode($enabled = FALSE, $role = 'Subscriber', $reason = '', $css = '', $use_503 = FALSE) {
-	$bypass_key = apply_filters('mapi_maintenance_mode_bypass_key', 'bypass');
-	if ((isset($_GET[ 'maintenance' ]) && $_GET[ 'maintenance' ] == $bypass_key)) {
-		$enabled = FALSE;
+function mapi_maintenance_mode( $enabled = false, $role = 'Subscriber', $reason = '', $css = '', $use_503 = false ) {
+	$bypass_key = apply_filters( 'mapi_maintenance_mode_bypass_key', 'bypass' );
+	if ( ( isset( $_GET['maintenance'] ) && $_GET['maintenance'] == $bypass_key ) ) {
+		$enabled = false;
 	}
-	if (defined('MAPI_MAINTENANCE_MODE_BYPASS') && MAPI_MAINTENANCE_MODE_BYPASS == TRUE) {
-		$enabled = FALSE;
+	if ( defined( 'MAPI_MAINTENANCE_MODE_BYPASS' ) && MAPI_MAINTENANCE_MODE_BYPASS == true ) {
+		$enabled = false;
 	}
-	if (empty($css)) {
-		require_once(MAPI_DIR_PATH . 'views/mapi-maintenance-mode-css.php');
+	if ( empty( $css ) ) {
+		require_once( MAPI_DIR_PATH . 'views/mapi-maintenance-mode-css.php' );
 		$css = $maintenance_mode_css;
 	}
-	$reason = stripslashes($reason);
-	if (empty($reason)) {
-		$reason = 'We\'re sorry, ' . get_bloginfo('name') . ' is currently undergoing scheduled maintenance.<br /><br /> We\'ll be back online shortly.';
+	$reason = stripslashes( $reason );
+	if ( empty( $reason ) ) {
+		$reason = 'We\'re sorry, ' . get_bloginfo( 'name' ) . ' is currently undergoing scheduled maintenance.<br /><br /> We\'ll be back online shortly.';
 	}
-	if ($enabled) {
-		if (!current_user_can(mapi_role_to_capability($role))) {
-			if ($use_503 === TRUE && locate_template('503.php')) {
+	if ( $enabled ) {
+		if ( ! current_user_can( mapi_role_to_capability( $role ) ) ) {
+			if ( $use_503 === true && locate_template( '503.php' ) ) {
 				// load the 503 template if it exists and the user has enabled it
-				locate_template('503.php', TRUE, TRUE);
+				locate_template( '503.php', true, true );
 				die;
 			} else {
 				?>
-				<!DOCTYPE HTML>
-				<html>
-				<head>
-					<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-					<title><?php bloginfo('name') ?> is temporarily offline for scheduled maintenance</title>
-					<link href="https://fonts.googleapis.com/css?family=Open+Sans:700" rel="stylesheet" type="text/css" />
-					<style type="text/css">
-						<?php echo stripslashes_deep($css); ?>
-					</style>
+                <!DOCTYPE HTML>
+                <html>
+                <head>
+                    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+                    <title><?php bloginfo( 'name' ) ?> is temporarily offline for scheduled maintenance</title>
+                    <link href="https://fonts.googleapis.com/css?family=Open+Sans:700" rel="stylesheet"
+                          type="text/css"/>
+                    <style type="text/css">
+                        <?php echo stripslashes_deep($css); ?>
+                    </style>
 					<?php
-					$analytics = mapi_get_option('enable_adv_ga_options');
-					if (mapi_is_true(@$analytics[ 'enabled' ])) {
+					$analytics = mapi_get_option( 'enable_adv_ga_options' );
+					if ( mapi_is_true( @$analytics['enabled'] ) ) {
 						mapi_analytics();
 					}
 					?>
-				</head>
-				<body>
-				<div id="content">
+                </head>
+                <body>
+                <div id="content">
 					<?php
-					do_action('mapi_maintenance_mode_before');
+					do_action( 'mapi_maintenance_mode_before' );
 					echo $reason;
-					do_action('mapi_maintenance_mode_after');
+					do_action( 'mapi_maintenance_mode_after' );
 					?>
-				</div>
-				</body>
-				</html>
+                </div>
+                </body>
+                </html>
 				<?php
 				die;
 			}
 		} else {
-			mapi_error(array('msg' => 'Maintenance mode is enabled.', 'echo' => FALSE, 'die' => FALSE));
+			mapi_error( array( 'msg' => 'Maintenance mode is enabled.', 'echo' => false, 'die' => false ) );
 		}
 	}
 }
@@ -91,7 +92,7 @@ function mapi_maintenance_mode($enabled = FALSE, $role = 'Subscriber', $reason =
  *
  * @return (string)
  */
-function mapi_role_to_capability($role) {
+function mapi_role_to_capability( $role ) {
 	$roles = array(
 		'Super Admin'   => 'manage_network',
 		'Administrator' => 'edit_theme_options',
@@ -100,10 +101,10 @@ function mapi_role_to_capability($role) {
 		'Contributor'   => 'edit_posts',
 		'Subscriber'    => 'read',
 	);
-	if (array_key_exists($role, $roles)) {
+	if ( array_key_exists( $role, $roles ) ) {
 		return $roles[ $role ];
 	} else {
-		return $roles[ 'Subscriber' ];
+		return $roles['Subscriber'];
 		//return mapi_error(array('msg' => $role.' is not a default WordPress user Role.', 'echo' => FALSE, 'die' => FALSE));
 	}
 }
@@ -122,23 +123,9 @@ function mapi_role_to_capability($role) {
  *
  * @return mixed|void
  */
-function mapi_html_cleanup($content) {
-	require_once(MAPI_DIR_PATH . 'lib/htmLawed/htmLawed.php');
-
-	if (file_exists(get_template_directory() . '/htmlawed-config.php')) {
-		include(get_template_directory() . '/htmlawed-config.php');
-	} else {
-		// add bootstrap classes in place of inline styles
-		//$content = str_ireplace('style="text-align: right;"', 'class="pull-right"', $content);
-		//$content = str_ireplace('style="text-align: left;"', 'class="pull-left"', $content);
-
-		$content = htmLawed($content, array('elements' => '* -div', 'deny_attribute' => 'style, align'));
-
-		// remove all empty p tags, even those with $nbsp;, <br>, etc.
-		$content = preg_replace("/<p[^>]*>[\s|&nbsp;]*<\/p>/", '', $content);
-	}
-
-	return apply_filters('mapi_html_clean', $content);
+function mapi_html_cleanup( $content ) {
+    // function body removed
+	return apply_filters( 'mapi_html_clean', $content );
 }
 
 /**
@@ -151,17 +138,17 @@ function mapi_html_cleanup($content) {
  *
  * @return string $string Given text with encoded email addresses
  */
-function mapi_encode_emails($string) {
+function mapi_encode_emails( $string ) {
 
 	// abort if $string doesn't contain a @-sign
-	if (apply_filters('mapi_at_sign_check', TRUE)) {
-		if (strpos($string, '@') === FALSE) {
+	if ( apply_filters( 'mapi_at_sign_check', true ) ) {
+		if ( strpos( $string, '@' ) === false ) {
 			return $string;
 		}
 	}
 
 	// override encoding function with the 'mapi_method' filter
-	$method = apply_filters('mapi_method', 'mapi_encode_str');
+	$method = apply_filters( 'mapi_method', 'mapi_encode_str' );
 
 	// override regex pattern with the 'mapi_regexp' filter
 	$regexp = apply_filters(
@@ -207,25 +194,24 @@ function mapi_encode_emails($string) {
  *
  * @return string $string Given text with encoded email addresses
  */
-function mapi_encode_str($string) {
+function mapi_encode_str( $string ) {
 
-	$chars = str_split($string);
-	$seed = mt_rand(0, (int) abs(crc32($string) / strlen($string)));
+	$chars = str_split( $string );
+	$seed  = mt_rand( 0, (int) abs( crc32( $string ) / strlen( $string ) ) );
 
-	foreach ($chars as $key => $char) {
+	foreach ( $chars as $key => $char ) {
 
-		$ord = ord($char);
+		$ord = ord( $char );
 
-		if ($ord < 128) { // ignore non-ascii chars
+		if ( $ord < 128 ) { // ignore non-ascii chars
 
-			$r = ($seed * (1 + $key)) % 100; // pseudo "random function"
+			$r = ( $seed * ( 1 + $key ) ) % 100; // pseudo "random function"
 
-			if ($r > 60 && $char != '@') {
-				;
+			if ( $r > 60 && $char != '@' ) {
 			} // plain character (not encoded), if not @-sign
 			else {
-				if ($r < 45) {
-					$chars[ $key ] = '&#x' . dechex($ord) . ';';
+				if ( $r < 45 ) {
+					$chars[ $key ] = '&#x' . dechex( $ord ) . ';';
 				} // hexadecimal
 				else {
 					$chars[ $key ] = '&#' . $ord . ';';
@@ -235,5 +221,5 @@ function mapi_encode_str($string) {
 		}
 	}
 
-	return implode('', $chars);
+	return implode( '', $chars );
 }

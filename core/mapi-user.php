@@ -26,12 +26,12 @@
  *
  * @return mixed|void
  */
-function mapi_set_admin_color_scheme($color_scheme) {
-	if('classic' == $color_scheme || 'fresh' == $color_scheme) {
+function mapi_set_admin_color_scheme( $color_scheme ) {
+	if ( 'classic' == $color_scheme || 'fresh' == $color_scheme ) {
 		$color_scheme = 'midnight';
 	}
 
-	return apply_filters('mapi_admin_color_scheme', $color_scheme);
+	return apply_filters( 'mapi_admin_color_scheme', $color_scheme );
 }
 
 /**
@@ -40,14 +40,14 @@ function mapi_set_admin_color_scheme($color_scheme) {
  *
  */
 function mapi_admin_menu_nav_menus() {
-	add_menu_page('Menus', 'Menus', 'edit_theme_options', 'nav-menus.php', '', 'dashicons-networking', '6.55');
-	add_submenu_page('nav-menus.php', 'All Menus', 'All Menus', 'edit_theme_options', 'nav-menus.php');
-	add_submenu_page('nav-menus.php', 'Add New', 'Add New', 'edit_theme_options', '?action=edit&menu=0');
-	add_submenu_page('nav-menus.php', 'Menu Locations', 'Menu Locations', 'edit_theme_options', '?action=locations');
-	$menus = wp_get_nav_menus(array('orderby' => 'name'));
-	foreach($menus as $menu) {
+	add_menu_page( 'Menus', 'Menus', 'edit_theme_options', 'nav-menus.php', '', 'dashicons-networking', '6.55' );
+	add_submenu_page( 'nav-menus.php', 'All Menus', 'All Menus', 'edit_theme_options', 'nav-menus.php' );
+	add_submenu_page( 'nav-menus.php', 'Add New', 'Add New', 'edit_theme_options', '?action=edit&menu=0' );
+	add_submenu_page( 'nav-menus.php', 'Menu Locations', 'Menu Locations', 'edit_theme_options', '?action=locations' );
+	$menus = wp_get_nav_menus( array( 'orderby' => 'name' ) );
+	foreach ( $menus as $menu ) {
 		add_submenu_page(
-			'nav-menus.php', esc_attr(ucwords($menu->name)), esc_attr(ucwords($menu->name)), 'edit_theme_options', 'nav-menus.php?action=edit&amp;menu=' . $menu->term_id, '');
+			'nav-menus.php', esc_attr( ucwords( $menu->name ) ), esc_attr( ucwords( $menu->name ) ), 'edit_theme_options', 'nav-menus.php?action=edit&amp;menu=' . $menu->term_id, '' );
 	}
 }
 
@@ -59,17 +59,17 @@ function mapi_admin_menu_nav_menus() {
  * @param string $username
  * @param string $password
  *
- * @return \WP_Error|\WP_User
+ * @return WP_Error|WP_User
  */
-function mapi_email_login_authenticate($user, $username, $password) {
-	if(!empty($username)) {
-		$user = get_user_by('email', $username);
+function mapi_email_login_authenticate( $user, $username, $password ) {
+	if ( ! empty( $username ) ) {
+		$user = get_user_by( 'email', $username );
 	}
-	if($user) {
+	if ( $user ) {
 		$username = $user->user_login;
 	}
 
-	return wp_authenticate_username_password(NULL, $username, $password);
+	return wp_authenticate_username_password( null, $username, $password );
 }
 
 /**
@@ -77,14 +77,14 @@ function mapi_email_login_authenticate($user, $username, $password) {
  */
 function mapi_username_or_email_login() {
 	?>
-	<script type="text/javascript">
-		// Form Label
-		document.getElementById('loginform').childNodes[ 1 ].childNodes[ 1 ].childNodes[ 0 ].nodeValue = 'Username or Email';
-		// Error Messages
-		if (document.getElementById('login_error')) {
-			document.getElementById('login_error').innerHTML = document.getElementById('login_error').innerHTML.replace('username', 'Username or Email');
-		}
-	</script><?php
+    <script type="text/javascript">
+        // Form Label
+        document.getElementById('loginform').childNodes[1].childNodes[1].childNodes[0].nodeValue = 'Username or Email';
+        // Error Messages
+        if (document.getElementById('login_error')) {
+            document.getElementById('login_error').innerHTML = document.getElementById('login_error').innerHTML.replace('username', 'Username or Email');
+        }
+    </script><?php
 }
 
 /**
@@ -94,12 +94,12 @@ function mapi_username_or_email_login() {
  *
  * @return int
  */
-function mapi_get_author_id($post_id = NULL) {
-	if(empty($post_id)) {
+function mapi_get_author_id( $post_id = null ) {
+	if ( empty( $post_id ) ) {
 		$post_id = get_the_ID();
 	}
-	$post = get_post($post_id);
-	$author_id = (int)$post->post_author;
+	$post      = get_post( $post_id );
+	$author_id = (int) $post->post_author;
 
 	/*if($author_id === 0) {
 
@@ -116,11 +116,11 @@ function mapi_get_author_id($post_id = NULL) {
  *
  * @return bool
  */
-function mapi_is_user_author($post_id = NULL) {
-	if(!is_user_logged_in() || (get_current_user_id() !== mapi_get_author_id($post_id)) || isset($_GET['public'])) {
-		return FALSE;
+function mapi_is_user_author( $post_id = null ) {
+	if ( ! is_user_logged_in() || ( get_current_user_id() !== mapi_get_author_id( $post_id ) ) || isset( $_GET['public'] ) ) {
+		return false;
 	} else {
-		return TRUE;
+		return true;
 	}
 }
 
@@ -133,15 +133,15 @@ function mapi_is_user_author($post_id = NULL) {
  *       mapi_redirect_non_admins(home_url('/action/profile/'));
  *
  */
-function mapi_redirect_non_admins($redirect) {
+function mapi_redirect_non_admins( $redirect ) {
 	global $pagenow;
 
 	// allow acf_form uploader past our security, this may not be the best method need to research
-	if('async-upload.php' == $pagenow) {
+	if ( 'async-upload.php' == $pagenow ) {
 		return;
 	}
-	if(is_admin() && !current_user_can('manage_options') && !(defined('DOING_AJAX') && DOING_AJAX)) {
-		wp_redirect($redirect);
+	if ( is_admin() && ! current_user_can( 'manage_options' ) && ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+		wp_redirect( $redirect );
 		exit;
 	}
 }
@@ -154,12 +154,12 @@ function mapi_redirect_non_admins($redirect) {
  *
  * @return mixed|void
  */
-function mapi_get_post_count($user_id, $post_type) {
+function mapi_get_post_count( $user_id, $post_type ) {
 	global $wpdb;
-	$where = get_posts_by_author_sql($post_type, TRUE, $user_id);
-	$count = $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->posts $where");
+	$where = get_posts_by_author_sql( $post_type, true, $user_id );
+	$count = $wpdb->get_var( "SELECT COUNT(*) FROM $wpdb->posts $where" );
 
-	return apply_filters('get_usernumposts', $count, $user_id);
+	return apply_filters( 'get_usernumposts', $count, $user_id );
 }
 
 /**
@@ -168,10 +168,10 @@ function mapi_get_post_count($user_id, $post_type) {
  * @return bool
  */
 function mapi_is_register() {
-	if(in_array($GLOBALS['pagenow'], array('wp-login.php')) && (isset($_GET['action']) && $_GET['action'] == 'register')) {
-		return TRUE;
+	if ( in_array( $GLOBALS['pagenow'], array( 'wp-login.php' ) ) && ( isset( $_GET['action'] ) && $_GET['action'] == 'register' ) ) {
+		return true;
 	} else {
-		return FALSE;
+		return false;
 	}
 }
 
@@ -181,10 +181,10 @@ function mapi_is_register() {
  * @return bool
  */
 function mapi_is_password_reset() {
-	if(in_array($GLOBALS['pagenow'], array('wp-login.php')) && (isset($_GET['action']) && $_GET['action'] == 'lostpassword')) {
-		return TRUE;
+	if ( in_array( $GLOBALS['pagenow'], array( 'wp-login.php' ) ) && ( isset( $_GET['action'] ) && $_GET['action'] == 'lostpassword' ) ) {
+		return true;
 	} else {
-		return FALSE;
+		return false;
 	}
 }
 
@@ -194,7 +194,7 @@ function mapi_is_password_reset() {
  * @return bool
  */
 function mapi_is_profile() {
-	return in_array($GLOBALS['pagenow'], array('profile.php'));
+	return in_array( $GLOBALS['pagenow'], array( 'profile.php' ) );
 }
 
 /**
@@ -203,7 +203,7 @@ function mapi_is_profile() {
  * @return bool
  */
 function mapi_is_user_edit() {
-	return in_array($GLOBALS['pagenow'], array('user-edit.php'));
+	return in_array( $GLOBALS['pagenow'], array( 'user-edit.php' ) );
 }
 
 /**
@@ -212,7 +212,7 @@ function mapi_is_user_edit() {
  * @return bool
  */
 function mapi_is_login() {
-	return in_array($GLOBALS['pagenow'], array('wp-login.php'));
+	return in_array( $GLOBALS['pagenow'], array( 'wp-login.php' ) );
 }
 
 /**
@@ -223,24 +223,24 @@ function mapi_is_login() {
  *
  * @return bool|string True on success. False or error on failure.
  */
-function mapi_has_role($user, $role) {
+function mapi_has_role( $user, $role ) {
 
-	if(empty($role)) {
-		return mapi_error(array('msg' => 'No role was specified.', 'echo' => FALSE, 'die' => FALSE));
+	if ( empty( $role ) ) {
+		return mapi_error( array( 'msg' => 'No role was specified.', 'echo' => false, 'die' => false ) );
 	}
 
-	if(!is_object($user)) {
-		$user = get_userdata($user);
+	if ( ! is_object( $user ) ) {
+		$user = get_userdata( $user );
 	}
 
-	if(!$user || !$user->exists()) {
-		return FALSE;
+	if ( ! $user || ! $user->exists() ) {
+		return false;
 	}
 
-	if(in_array($role, (array)$user->roles)) {
-		return TRUE;
+	if ( in_array( $role, (array) $user->roles ) ) {
+		return true;
 	} else {
-		return FALSE;
+		return false;
 	}
 }
 
@@ -252,13 +252,13 @@ function mapi_has_role($user, $role) {
  *
  * @return bool|string
  */
-function mapi_current_user_has_role($role) {
+function mapi_current_user_has_role( $role ) {
 
-	if(empty($role)) {
-		return mapi_error(array('msg' => 'No role was specified.', 'echo' => FALSE, 'die' => FALSE));
+	if ( empty( $role ) ) {
+		return mapi_error( array( 'msg' => 'No role was specified.', 'echo' => false, 'die' => false ) );
 	}
 
 	$user = wp_get_current_user();
 
-	return mapi_has_role($user, $role);
+	return mapi_has_role( $user, $role );
 }

@@ -4,7 +4,7 @@ Plugin Name: WordPress Helpers
 Plugin URI: https://github.com/attackant/wordpress-helpers
 Description: Provides a library of additional template tags, 3rd-party libraries, and functions for WordPress themes and additional features for WordPress CMS websites.
 Author: Damian Taggart
-Version: 1.1.2
+Version: 2.0
 Author URI: https://github.com/attackant/
 Network: false
 */

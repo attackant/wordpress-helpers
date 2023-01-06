@@ -10,37 +10,37 @@
  *
  */
 
-if(isset($_GET['exts'])) {
+if ( isset( $_GET['exts'] ) ) {
 	$exts = $_GET['exts'];
 } else {
 	$exts = 'jpg,jpeg,png,gif';
 }
 
-if(isset($_GET['dir'])) {
+if ( isset( $_GET['dir'] ) ) {
 	$dir = $_GET['dir'];
 } else {
 	$dir = './';
 }
 
-if(isset($_GET['path'])) {
+if ( isset( $_GET['path'] ) ) {
 	$path = $_GET['path'];
 } else {
-	$path = dirname(__FILE__); // @todo needs testing
+	$path = dirname( __FILE__ ); // @todo needs testing
 }
 
-$files = array();
-$i = -1;
-$handle = opendir($path);
-$exts = explode(',', $exts);
-while(FALSE !== ($file = readdir($handle))) {
-	foreach($exts as $ext) {
-		if(preg_match('/\.'.$ext.'$/i', $file, $test)) {
+$files  = array();
+$i      = - 1;
+$handle = opendir( $path );
+$exts   = explode( ',', $exts );
+while ( false !== ( $file = readdir( $handle ) ) ) {
+	foreach ( $exts as $ext ) {
+		if ( preg_match( '/\.' . $ext . '$/i', $file, $test ) ) {
 			$files[] = $file;
-			++$i;
+			++ $i;
 		}
 	}
 }
-closedir($handle);
-mt_srand((double) microtime() * 1000000); // seed for PHP < 4.2
-$rand = mt_rand(0, $i);
-header('Location: '.$dir.$files[$rand]);
+closedir( $handle );
+mt_srand( (double) microtime() * 1000000 ); // seed for PHP < 4.2
+$rand = mt_rand( 0, $i );
+header( 'Location: ' . $dir . $files[ $rand ] );
