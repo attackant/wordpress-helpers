@@ -1,4 +1,4 @@
-ordPress Helpers
+WordPress Helpers (updating some old code, work in progress, do not install yet)
 =============
 
 - Author: Damian Taggart
