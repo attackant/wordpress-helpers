@@ -1,4 +1,4 @@
 <?php
 
-require('mthumb/mthumb.php');
+require( 'mthumb/mthumb.php' );
 

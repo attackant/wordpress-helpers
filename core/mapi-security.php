@@ -124,7 +124,7 @@ function mapi_role_to_capability( $role ) {
  * @return mixed|void
  */
 function mapi_html_cleanup( $content ) {
-    // function body removed
+	// function body removed
 	return apply_filters( 'mapi_html_clean', $content );
 }
 
@@ -147,9 +147,6 @@ function mapi_encode_emails( $string ) {
 		}
 	}
 
-	// override encoding function with the 'mapi_method' filter
-	$method = apply_filters( 'mapi_method', 'mapi_encode_str' );
-
 	// override regex pattern with the 'mapi_regexp' filter
 	$regexp = apply_filters(
 		'mapi_regexp',
@@ -169,14 +166,14 @@ function mapi_encode_emails( $string ) {
 		}xi'
 	);
 
-	return preg_replace_callback(
-		$regexp,
-		create_function(
-			'$matches',
-			'return ' . $method . '($matches[0]);'
-		),
-		$string
-	);
+    // override encoding function with the 'mapi_method' filter
+	$method = apply_filters( 'mapi_method', 'mapi_encode_str' );
+
+	return preg_replace_callback( $regexp,
+		function ( $matches, $method ) {
+			return $method . ( $matches[0] );
+		},
+		$string );
 }
 
 /**

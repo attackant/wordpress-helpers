@@ -23,11 +23,11 @@
  * Florian Sager, 25.07.2008, sager@agitos.de, http://www.agitos.de
  */
 
-require_once("effectiveTLDs.inc.php");
-require_once("regDomain.inc.php");
+require_once( "effectiveTLDs.inc.php" );
+require_once( "regDomain.inc.php" );
 
-if ($_SERVER["argc"]<2) {
-	print("test-regDomain.php <(fully-qualified-domain-name )+>\n");
+if ( $_SERVER["argc"] < 2 ) {
+	print( "test-regDomain.php <(fully-qualified-domain-name )+>\n" );
 	exit;
 }
 
@@ -37,14 +37,14 @@ if ($_SERVER["argc"]<2) {
 $argc = $_SERVER["argc"];
 $argv = $_SERVER["argv"];
 
-for ($i=1; $i<$argc; $i++) {
+for ( $i = 1; $i < $argc; $i ++ ) {
 
-	$registeredDomain = getRegisteredDomain($argv[$i], $tldTree);
+	$registeredDomain = getRegisteredDomain( $argv[ $i ], $tldTree );
 
-	if ( $registeredDomain === NULL ) {
-		printf("error: %s\n", $argv[$i]);
+	if ( $registeredDomain === null ) {
+		printf( "error: %s\n", $argv[ $i ] );
 	} else {
-		printf("%s\n", $registeredDomain);
+		printf( "%s\n", $registeredDomain );
 	}
 }
 

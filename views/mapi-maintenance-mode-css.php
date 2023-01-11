@@ -1,13 +1,13 @@
 <?php
 /**
-* mapi_maintenance-mode-css.php
-*
-* @created 8/22/13 11:33 AM
-* @author Damian Taggart
-* @copyright Copyright (c) 2006-2023
-* @link https://github.com/attackant/wordpress-helpers
-*
-*/
+ * mapi_maintenance-mode-css.php
+ *
+ * @created 8/22/13 11:33 AM
+ * @author Damian Taggart
+ * @copyright Copyright (c) 2006-2023
+ * @link https://github.com/attackant/wordpress-helpers
+ *
+ */
 
 
 $maintenance_mode_css = <<<CSS

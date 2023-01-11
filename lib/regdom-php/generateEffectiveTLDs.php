@@ -9,17 +9,17 @@
  *
  */
 
-DEFINE('URL', 'http://mxr.mozilla.org/mozilla-central/source/netwerk/dns/effective_tld_names.dat?raw=1');
+DEFINE( 'URL', 'http://mxr.mozilla.org/mozilla-central/source/netwerk/dns/effective_tld_names.dat?raw=1' );
 
-if (PHP_SAPI != "cli") {
+if ( PHP_SAPI != "cli" ) {
 	exit;
 }
 
 $format = 'php';
-if ($argc > 1) {
-	if ($argv[1] == 'perl') {
+if ( $argc > 1 ) {
+	if ( $argv[1] == 'perl' ) {
 		$format = 'perl';
-	} else if ($argv[1] == 'c') {
+	} else if ( $argv[1] == 'c' ) {
 		$format = 'c';
 	}
 }
@@ -27,84 +27,85 @@ if ($argc > 1) {
 /*
  * Does $search start with $startstring?
  */
-function startsWith($search, $startstring) {
-	return (substr($search, 0, strlen($startstring)) == $startstring);
+function startsWith( $search, $startstring ) {
+	return ( substr( $search, 0, strlen( $startstring ) ) == $startstring );
 }
 
 /*
  * Does $search end with $endstring?
  */
-function endsWith($search, $endstring) {
-	return (substr($search, -strlen($endstring)) == $endstring);
+function endsWith( $search, $endstring ) {
+	return ( substr( $search, - strlen( $endstring ) ) == $endstring );
 }
 
 
-function buildSubdomain(&$node, $tldParts) {
+function buildSubdomain( &$node, $tldParts ) {
 
-	$dom = trim(array_pop($tldParts));
+	$dom = trim( array_pop( $tldParts ) );
 
-	$isNotDomain = FALSE;
-	if (startsWith($dom, "!")) {
-		$dom = substr($dom, 1);
-		$isNotDomain = TRUE;
+	$isNotDomain = false;
+	if ( startsWith( $dom, "!" ) ) {
+		$dom         = substr( $dom, 1 );
+		$isNotDomain = true;
 	}
 
-	if (!array_key_exists($dom, $node)) {
-		if ($isNotDomain) {
-			$node[$dom] = array("!" => "");
+	if ( ! array_key_exists( $dom, $node ) ) {
+		if ( $isNotDomain ) {
+			$node[ $dom ] = array( "!" => "" );
 		} else {
-			$node[$dom] = array();
+			$node[ $dom ] = array();
 		}
 	}
 
-	if (!$isNotDomain && count($tldParts)>0) {
-		buildSubdomain($node[$dom], $tldParts);
+	if ( ! $isNotDomain && count( $tldParts ) > 0 ) {
+		buildSubdomain( $node[ $dom ], $tldParts );
 	}
 }
 
-function printNode($key, $valueTree, $isAssignment = false, $depth = 0) {
+function printNode( $key, $valueTree, $isAssignment = false, $depth = 0 ) {
 
 	global $format;
 
-	if ($isAssignment) {
-		if ($format == "perl") {
+	if ( $isAssignment ) {
+		if ( $format == "perl" ) {
 			echo "$key = {";
 		} else {
 			echo "$key = array(";
 		}
 	} else {
-		if (strcmp($key, "!")==0) {
-			if ($format == "perl") {
+		if ( strcmp( $key, "!" ) == 0 ) {
+			if ( $format == "perl" ) {
 				echo "'!' => {}";
 			} else {
 				echo "'!' => ''";
 			}
+
 			return;
 		} else {
-			if ($format == "perl") {
+			if ( $format == "perl" ) {
 				echo "'$key' => {";
 			} else {
-				echo str_repeat('  ', $depth)."'$key' => array(";
+				echo str_repeat( '  ', $depth ) . "'$key' => array(";
 			}
 		}
 	}
 
-	$keys = array_keys($valueTree);
+	$keys = array_keys( $valueTree );
 
-	for ($i=0; $i<count($keys); $i++) {
+	for ( $i = 0; $i < count( $keys ); $i ++ ) {
 
-		$key = $keys[$i];
+		$key = $keys[ $i ];
 		echo "\n";
-		printNode($key, $valueTree[$key], false, $depth + 1);
+		printNode( $key, $valueTree[ $key ], false, $depth + 1 );
 
-		if ($i+1 != count($valueTree)) {
+		if ( $i + 1 != count( $valueTree ) ) {
 			echo ",";
 		} else {
 			echo "";
 		}
 	}
 
-	if ($format == "perl") {
+	if ( $format == "perl" ) {
 		echo '}';
 	} else {
 		echo ')';
@@ -113,29 +114,29 @@ function printNode($key, $valueTree, $isAssignment = false, $depth = 0) {
 
 // sample: root(3:ac(5:com,edu,gov,net,ad(3:nom,co!,*)),de,com)
 
-function printNode_C($key, $valueTree) {
+function printNode_C( $key, $valueTree ) {
 
 	echo "$key";
 
-	$keys = array_keys($valueTree);
+	$keys = array_keys( $valueTree );
 
-	if (count($keys)>0) {
+	if ( count( $keys ) > 0 ) {
 
-		if (strcmp($keys['!'], "!")==0) {
+		if ( strcmp( $keys['!'], "!" ) == 0 ) {
 			echo "!";
 		} else {
 
-			echo "(".count($keys).":";
+			echo "(" . count( $keys ) . ":";
 
-			for ($i=0; $i<count($keys); $i++) {
+			for ( $i = 0; $i < count( $keys ); $i ++ ) {
 
-				$key = $keys[$i];
+				$key = $keys[ $i ];
 
 				// if (count($valueTree[$key])>0) {
-				printNode_C($key, $valueTree[$key]);
+				printNode_C( $key, $valueTree[ $key ] );
 				// }
 
-				if ($i+1 != count($valueTree)) {
+				if ( $i + 1 != count( $valueTree ) ) {
 					echo ",";
 				}
 			}
@@ -147,40 +148,40 @@ function printNode_C($key, $valueTree) {
 
 // --- main ---
 
-error_reporting(E_ERROR);
+error_reporting( E_ERROR );
 
 $tldTree = array();
-$list = file_get_contents(URL);
+$list    = file_get_contents( URL );
 // $list = "bg\na.bg\n0.bg\n!c.bg\n";
-$lines = explode("\n", $list);
-$licence = TRUE;
+$lines          = explode( "\n", $list );
+$licence        = true;
 $commentsection = '';
 
-foreach ($lines as $line) {
+foreach ( $lines as $line ) {
 
-	if ($licence && startsWith($line, "//")) {
+	if ( $licence && startsWith( $line, "//" ) ) {
 
-		if ($format == "perl") {
-			$commentsection .= "# ".substr($line, 2)."\n";
+		if ( $format == "perl" ) {
+			$commentsection .= "# " . substr( $line, 2 ) . "\n";
 		} else {
-			$commentsection .= $line."\n";
+			$commentsection .= $line . "\n";
 		}
 
-		if (startsWith($line, "// ***** END LICENSE BLOCK")) {
-			$licence = FALSE;
+		if ( startsWith( $line, "// ***** END LICENSE BLOCK" ) ) {
+			$licence        = false;
 			$commentsection .= "\n";
 		}
 		continue;
 	}
 
-	if (startsWith($line, "//") || $line == '') {
+	if ( startsWith( $line, "//" ) || $line == '' ) {
 		continue;
 	}
 
 	// this must be a TLD
-	$tldParts = explode('.', $line);
+	$tldParts = explode( '.', $line );
 
-	buildSubdomain($tldTree, $tldParts);
+	buildSubdomain( $tldTree, $tldParts );
 }
 
 // print_r($tldTree);
@@ -196,24 +197,24 @@ $tldTree = array(
 );
 */
 
-switch($format) {
+switch ( $format ) {
 	case 'c':
-		echo $commentsection."\n";
+		echo $commentsection . "\n";
 		echo "char* tldString = \"";
-		printNode_C("root", $tldTree);
+		printNode_C( "root", $tldTree );
 		echo "\";\n";
 		break;
 	case 'perl':
-		echo $commentsection."\n";
+		echo $commentsection . "\n";
 		print "package effectiveTLDs;\n\n";
-		printNode("\$tldTree", $tldTree, TRUE);
+		printNode( "\$tldTree", $tldTree, true );
 		echo ";\n";
 		break;
 	case 'php':
 	default:
 		echo "<?php\n";
-		echo $commentsection."\n";
-		printNode("\$tldTree", $tldTree, TRUE);
+		echo $commentsection . "\n";
+		printNode( "\$tldTree", $tldTree, true );
 		echo ";\n";
 		echo "return \$tldTree;\n";
 		break;

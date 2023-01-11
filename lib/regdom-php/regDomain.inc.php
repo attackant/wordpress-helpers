@@ -35,79 +35,92 @@
  * $signingDomain has to be provided lowercase (!)
  */
 
-function getRegisteredDomain($signingDomain, $fallback = TRUE) {
+function getRegisteredDomain( $signingDomain, $fallback = true ) {
 
 	global $tldTree;
 
-	$signingDomainParts = explode('.', $signingDomain);
+	$signingDomainParts = explode( '.', $signingDomain );
 
-	$result = findRegisteredDomain($signingDomainParts, $tldTree);
+	$result = findRegisteredDomain( $signingDomainParts, $tldTree );
 
-	if ($result===NULL || $result=="") {
+	if ( $result === null || $result == "" ) {
 		// this is an invalid domain name
-		return NULL;
+		return null;
 	}
 
 	// assure there is at least 1 TLD in the stripped signing domain
-	if (!strpos($result, '.')) {
-		if ($fallback===FALSE) {
-			return NULL;
+	if ( ! strpos( $result, '.' ) ) {
+		if ( $fallback === false ) {
+			return null;
 		}
-		$cnt = count($signingDomainParts);
-		if ($cnt==1 || $signingDomainParts[$cnt-2]=="") return NULL;
-		if (!validDomainPart($signingDomainParts[$cnt-2]) || !validDomainPart($signingDomainParts[$cnt-1])) return NULL;
-		return $signingDomainParts[$cnt-2].'.'.$signingDomainParts[$cnt-1];
+		$cnt = count( $signingDomainParts );
+		if ( $cnt == 1 || $signingDomainParts[ $cnt - 2 ] == "" ) {
+			return null;
+		}
+		if ( ! validDomainPart( $signingDomainParts[ $cnt - 2 ] ) || ! validDomainPart( $signingDomainParts[ $cnt - 1 ] ) ) {
+			return null;
+		}
+
+		return $signingDomainParts[ $cnt - 2 ] . '.' . $signingDomainParts[ $cnt - 1 ];
 	}
+
 	return $result;
 }
 
-function validDomainPart($domPart) {
+function validDomainPart( $domPart ) {
 	// see http://www.register.com/domain-extension-rules.rcmx
-	
-	$len = strlen($domPart);
+
+	$len = strlen( $domPart );
 
 	// not more than 63 characters
-	if ($len>63) return FALSE;
+	if ( $len > 63 ) {
+		return false;
+	}
 
 	// not less than 1 characters --> there are TLD-specific rules that could be considered additionally
-	if ($len<1) return FALSE;
-	
+	if ( $len < 1 ) {
+		return false;
+	}
+
 	// Use only letters, numbers, or hyphen ("-")
 	// not beginning or ending with a hypen (this is TLD specific, be aware!)
-	if (!preg_match("/^([a-z0-9])(([a-z0-9-])*([a-z0-9]))*$/", $domPart)) return FALSE;
+	if ( ! preg_match( "/^([a-z0-9])(([a-z0-9-])*([a-z0-9]))*$/", $domPart ) ) {
+		return false;
+	}
 
-	return TRUE;
+	return true;
 }
 
 // recursive helper method
-function findRegisteredDomain($remainingSigningDomainParts, &$treeNode) {
+function findRegisteredDomain( $remainingSigningDomainParts, &$treeNode ) {
 
-	$sub = array_pop($remainingSigningDomainParts);
+	$sub = array_pop( $remainingSigningDomainParts );
 
-	$result = NULL;
-	if (isset($treeNode['!'])) {
+	$result = null;
+	if ( isset( $treeNode['!'] ) ) {
 		return '#';
 	}
-	
-	if (!validDomainPart($sub)) {
-		return NULL;
+
+	if ( ! validDomainPart( $sub ) ) {
+		return null;
 	}
 
-	if (is_array($treeNode) && array_key_exists($sub, $treeNode)) {
-		$result = findRegisteredDomain($remainingSigningDomainParts, $treeNode[$sub]);
-	} else if (is_array($treeNode) && array_key_exists('*', $treeNode)) {
-		$result = findRegisteredDomain($remainingSigningDomainParts, $treeNode['*']);
+	if ( is_array( $treeNode ) && array_key_exists( $sub, $treeNode ) ) {
+		$result = findRegisteredDomain( $remainingSigningDomainParts, $treeNode[ $sub ] );
+	} else if ( is_array( $treeNode ) && array_key_exists( '*', $treeNode ) ) {
+		$result = findRegisteredDomain( $remainingSigningDomainParts, $treeNode['*'] );
 	} else {
 		return $sub;
 	}
 
 	// this is a hack 'cause PHP interpretes '' as NULL
-	if ($result == '#') {
+	if ( $result == '#' ) {
 		return $sub;
-	} else if (strlen($result)>0) {
-		return $result.'.'.$sub;
+	} else if ( strlen( $result ) > 0 ) {
+		return $result . '.' . $sub;
 	}
-	return NULL;
+
+	return null;
 }
 
 ?>

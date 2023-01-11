@@ -1,6 +1,9 @@
 {
-    "require": {
-        "tgm/plugin-activation": "^2.6",
-        "j7mbo/twitter-api-php": "^1.0"
-    }
+  "require": {
+    "tgmpa/tgm-plugin-activation": "^2.6",
+    "j7mbo/twitter-api-php": "^1.0"
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "^3"
+  }
 }

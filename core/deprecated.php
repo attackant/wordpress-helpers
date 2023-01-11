@@ -78,9 +78,10 @@ function mapi_tweets( $args ) {
 			mapi_error( array( 'msg' => 'Could not retrieve Twitter XML: ' . $url, 'die' => false, 'echo' => false ) );
 		}
 	} else {
-		mapi_error( array( 'msg'  => 'The PHP function simplexml_load_file was not found.',
-		                   'die'  => false,
-		                   'echo' => false
+		mapi_error( array(
+			'msg'  => 'The PHP function simplexml_load_file was not found.',
+			'die'  => false,
+			'echo' => false
 		) );
 	}
 }

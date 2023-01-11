@@ -21,9 +21,10 @@
  */
 function mapi_get_term_children_by_slug( $taxonomy, $slug ) {
 	if ( ! isset( $taxonomy ) || ! isset( $slug ) ) {
-		return mapi_error( array( 'die'  => false,
-		                          'echo' => false,
-		                          'msg'  => 'A required parameter was not provided.'
+		return mapi_error( array(
+			'die'  => false,
+			'echo' => false,
+			'msg'  => 'A required parameter was not provided.'
 		) );
 	} else {
 		$term    = get_term_by( 'slug', $slug, $taxonomy );

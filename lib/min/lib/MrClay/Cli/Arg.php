@@ -44,140 +44,138 @@ use BadMethodCallException;
  * @license http://www.opensource.org/licenses/mit-license.php  MIT License
  */
 class Arg {
-    /**
-     * @return array
-     */
-    public function getDefaultSpec()
-    {
-        return array(
-            'mayHaveValue' => false,
-            'mustHaveValue' => false,
-            'assertFile' => false,
-            'assertDir' => false,
-            'assertReadable' => false,
-            'assertWritable' => false,
-            'useAsInfile' => false,
-            'useAsOutfile' => false,
-        );
-    }
+	/**
+	 * @return array
+	 */
+	public function getDefaultSpec() {
+		return array(
+			'mayHaveValue'   => false,
+			'mustHaveValue'  => false,
+			'assertFile'     => false,
+			'assertDir'      => false,
+			'assertReadable' => false,
+			'assertWritable' => false,
+			'useAsInfile'    => false,
+			'useAsOutfile'   => false,
+		);
+	}
 
-    /**
-     * @var array
-     */
-    protected $spec = array();
+	/**
+	 * @var array
+	 */
+	protected $spec = array();
 
-    /**
-     * @var bool
-     */
-    protected $required = false;
+	/**
+	 * @var bool
+	 */
+	protected $required = false;
 
-    /**
-     * @var string
-     */
-    protected $description = '';
+	/**
+	 * @var string
+	 */
+	protected $description = '';
 
-    /**
-     * @param bool $isRequired
-     */
-    public function __construct($isRequired = false)
-    {
-        $this->spec = $this->getDefaultSpec();
-        $this->required = (bool) $isRequired;
-        if ($isRequired) {
-            $this->spec['mustHaveValue'] = true;
-        }
-    }
+	/**
+	 * @param bool $isRequired
+	 */
+	public function __construct( $isRequired = false ) {
+		$this->spec     = $this->getDefaultSpec();
+		$this->required = (bool) $isRequired;
+		if ( $isRequired ) {
+			$this->spec['mustHaveValue'] = true;
+		}
+	}
 
-    /**
-     * Assert that the argument's value points to a writable file. When
-     * Cli::openOutput() is called, a write pointer to this file will
-     * be provided.
-     * @return Arg
-     */
-    public function useAsOutfile()
-    {
-        $this->spec['useAsOutfile'] = true;
-        return $this->assertFile()->assertWritable();
-    }
+	/**
+	 * Assert that the argument's value points to a writable file. When
+	 * Cli::openOutput() is called, a write pointer to this file will
+	 * be provided.
+	 * @return Arg
+	 */
+	public function useAsOutfile() {
+		$this->spec['useAsOutfile'] = true;
 
-    /**
-     * Assert that the argument's value points to a readable file. When
-     * Cli::openInput() is called, a read pointer to this file will
-     * be provided.
-     * @return Arg
-     */
-    public function useAsInfile()
-    {
-        $this->spec['useAsInfile'] = true;
-        return $this->assertFile()->assertReadable();
-    }
+		return $this->assertFile()->assertWritable();
+	}
 
-    /**
-     * @return array
-     */
-    public function getSpec()
-    {
-        return $this->spec;
-    }
+	/**
+	 * Assert that the argument's value points to a readable file. When
+	 * Cli::openInput() is called, a read pointer to this file will
+	 * be provided.
+	 * @return Arg
+	 */
+	public function useAsInfile() {
+		$this->spec['useAsInfile'] = true;
 
-    /**
-     * @param string $desc
-     * @return Arg
-     */
-    public function setDescription($desc)
-    {
-        $this->description = $desc;
-        return $this;
-    }
+		return $this->assertFile()->assertReadable();
+	}
 
-    /**
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
+	/**
+	 * @return array
+	 */
+	public function getSpec() {
+		return $this->spec;
+	}
 
-    /**
-     * @return bool
-     */
-    public function isRequired()
-    {
-        return $this->required;
-    }
+	/**
+	 * @param string $desc
+	 *
+	 * @return Arg
+	 */
+	public function setDescription( $desc ) {
+		$this->description = $desc;
 
-    /**
-     * Note: magic methods declared in class PHPDOC
-     *
-     * @param string $name
-     * @param array $args
-     * @return Arg
-     * @throws BadMethodCallException
-     */
-    public function __call($name, array $args = array())
-    {
-        if (array_key_exists($name, $this->spec)) {
-            $this->spec[$name] = true;
-            if ($name === 'assertFile' || $name === 'assertDir') {
-                $this->spec['mustHaveValue'] = true;
-            }
-        } else {
-            throw new BadMethodCallException('Method does not exist');
-        }
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Note: magic properties declared in class PHPDOC
-     *
-     * @param string $name
-     * @return bool|null
-     */
-    public function __get($name)
-    {
-        if (array_key_exists($name, $this->spec)) {
-            return $this->spec[$name];
-        }
-        return null;
-    }
+	/**
+	 * @return string
+	 */
+	public function getDescription() {
+		return $this->description;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isRequired() {
+		return $this->required;
+	}
+
+	/**
+	 * Note: magic methods declared in class PHPDOC
+	 *
+	 * @param string $name
+	 * @param array $args
+	 *
+	 * @return Arg
+	 * @throws BadMethodCallException
+	 */
+	public function __call( $name, array $args = array() ) {
+		if ( array_key_exists( $name, $this->spec ) ) {
+			$this->spec[ $name ] = true;
+			if ( $name === 'assertFile' || $name === 'assertDir' ) {
+				$this->spec['mustHaveValue'] = true;
+			}
+		} else {
+			throw new BadMethodCallException( 'Method does not exist' );
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Note: magic properties declared in class PHPDOC
+	 *
+	 * @param string $name
+	 *
+	 * @return bool|null
+	 */
+	public function __get( $name ) {
+		if ( array_key_exists( $name, $this->spec ) ) {
+			return $this->spec[ $name ];
+		}
+
+		return null;
+	}
 }

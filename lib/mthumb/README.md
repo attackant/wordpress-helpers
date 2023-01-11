@@ -1,14 +1,18 @@
 mThumb (a secure PHP image resize script)
 ======
 
-A secure, slimmed down version of the ol' standby TimThumb. 
+A secure, slimmed down version of the ol' standby TimThumb.
 
 Project Goals
 =======
 
-Like many WordPress developers we've been making use of the old TimThumb script for years. It works well and offers features not yet available in other projects, like BFI_Thumb (although that does look like a promising start). However, we've still got a lot of sites that we are supporting that require some of TimThumb's more advanced features like crop positioning and filters. 
- 
- So we decided to create a leaner, meaner, MUCH MORE SECURE fork of TimThumb. To that end we've foregone full backward compatibility with the old TimThumb code. Here are the major changes:
+Like many WordPress developers we've been making use of the old TimThumb script for years. It works well and offers
+features not yet available in other projects, like BFI_Thumb (although that does look like a promising start). However,
+we've still got a lot of sites that we are supporting that require some of TimThumb's more advanced features like crop
+positioning and filters.
+
+So we decided to create a leaner, meaner, MUCH MORE SECURE fork of TimThumb. To that end we've foregone full backward
+compatibility with the old TimThumb code. Here are the major changes:
 
 * Removed the WebShots features entirely
 * Removed the PHP Memory settings entirely
@@ -21,12 +25,14 @@ Like many WordPress developers we've been making use of the old TimThumb script 
 * Enabled PNG transparency by default
 * Removed error output that revealed script versions and error images
 * Tilde support in URLs (for user home directories was added)
-* Code cleanup and PHP docblock comments 
+* Code cleanup and PHP docblock comments
 * Added check to ensure class was defined before calling start method
 
 Get Involved
 ========
-You can help out by testing this and reporting bugs. We ARE NOT interested in preserving 100% compatibility with all of TimThumb's less frequently used features as mentioned above but we ARE VERY motivated to make sure this code is secure. So any security issues will be dealt with immediately. 
+You can help out by testing this and reporting bugs. We ARE NOT interested in preserving 100% compatibility with all of
+TimThumb's less frequently used features as mentioned above but we ARE VERY motivated to make sure this code is secure.
+So any security issues will be dealt with immediately.
 
 Pull requests are most welcome. Cheers.
 
@@ -106,7 +112,8 @@ mThumb Parameters
 
 Configuration Constants
 ========
-You can override certain built in settings in mThumb. by creating a config file called mthumb-config.php and would contain a series of define statements that change default settings. 
+You can override certain built in settings in mThumb. by creating a config file called mthumb-config.php and would
+contain a series of define statements that change default settings.
 
 There are a whole bunch of settings that are not controlled by the normal query string parameters.
 
@@ -208,6 +215,7 @@ There are a whole bunch of settings that are not controlled by the normal query 
 
 Changelog
 ========
+
 * 3.0.1 - Bugfix for unwritable cache folder
 * 3.0 - Version number update to calm down some automated scanners that think this is an old version of TimThumb
 * 1.0 - First proper release
